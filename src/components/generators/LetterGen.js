@@ -1,6 +1,6 @@
 import { BaseGen } from "./BaseGen";
 
-export class LettersGen extends BaseGen{
+export class LetterGen extends BaseGen{
 
     constructor(){
         super();
