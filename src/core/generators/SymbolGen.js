@@ -10,7 +10,7 @@ export class SymbolGen extends BaseGen {
     generate = () => {
         const index = Math.floor( Math.random() * this.chars.length ); 
         const symbol = this.chars[index];
-        return symbol;
+        return symbol; 
     }
 
 }
