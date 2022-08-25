@@ -17,13 +17,14 @@ export class GeneratorFactory {
         this.initStrategies(); // Заполним this.strategyInstance
     }
 
-    // создаем инстанс и записываем в мапу
+    // создаем инстанс и записываем в мапу. Так же создадим новый ген
     setStrategy = (name, Constructor) => {
         this.strategyInstance.set( name, new Constructor() );
         this.setGenerator();
         return this;
     }
 
+        // создаем инстанс и записываем в мапу. Так же создадим новый ген
     removeStrategy(key) {
         this.strategyInstace.delete(key);
         this.setGenerator();
