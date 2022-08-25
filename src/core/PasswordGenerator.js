@@ -1,6 +1,6 @@
-import { BaseGen } from "./BaseGen";
+import { BaseGen } from "./generators/BaseGen";
 
-export class PassworGenerator extends BaseGen {
+export class PasswordGenerator extends BaseGen {
 
     /**
      * 
@@ -12,15 +12,17 @@ export class PassworGenerator extends BaseGen {
         super();
         this.length = length;
         this.strategies = strategies;
+        console.log(this.length);
     }
 
     generate = () => {
         let password = '';
-        while( password.length < this.strategies.length ) {
+        while( password.length < this.length ) {
             const index = Math.floor( Math.random() *  this.strategies.length);
             const stepStrategy = this.strategies[index];
             const stepChar = stepStrategy.generate();
             password += stepChar;
         }
+        return password;
     }
 }

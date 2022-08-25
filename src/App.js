@@ -1,9 +1,10 @@
 import React from 'react';
-import './App.css';
+import { PasswordGeneratorLogic } from './components/PasswordGeneratorLogic';
 
 function App() {
   return (
     <div className="App">
+      <PasswordGeneratorLogic />
     </div>
   );
 }

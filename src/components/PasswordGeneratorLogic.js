@@ -1,10 +1,11 @@
 import React from 'react';
-import { GeneratorsFactory, PasswordGenerator } from '../core/GeneratorsFactory';
+import { GeneratorsFactory } from '../core/GeneratorsFactory';
+import { PasswordGeneratorVuew } from './PasswordGeneratorVuew';
 
 
 const ALL_STRATEGIES = [ 'NUMBER', 'LETTER', 'SYMBOL' ];
 
-export class PasswordGeneratorPage extends React.Component {
+export class PasswordGeneratorLogic extends React.Component {
 
     state = {
         suggestedPassword: '',
@@ -24,6 +25,7 @@ export class PasswordGeneratorPage extends React.Component {
     initGenerator = () => {
         const { length, strategies } = this.state;
         this.generator = new GeneratorsFactory(length, strategies);
+        //console.log(this.generator); // ok
     }
 
     /**
@@ -31,8 +33,10 @@ export class PasswordGeneratorPage extends React.Component {
      *  Генерируем новый пароль и записываем новое состояние 
      */
 
-    setPassword = () => {
+    setPassword () {
         const suggestedPassword =  this.generator.generate();
+        // console.dir(this.generator);
+        // console.log(suggestedPassword);
         this.setState( state => ( { ...state, suggestedPassword } ) );
     }
 
@@ -44,7 +48,9 @@ export class PasswordGeneratorPage extends React.Component {
 
     setLength = (length) => {
         this.generator.setLength(length);
-        this.setState( state => ( {...state, length } ), this.setPassword );
+        this.setState( state => ( {...state, length } ), () => {
+            this.setPassword();
+        } );
     }
 
     /**
@@ -53,9 +59,11 @@ export class PasswordGeneratorPage extends React.Component {
      */
 
     addStrategy = (strategyName) => {
-        const strategies = this.state.strategies;
+        const strategies = new Set(this.state.strategies);
         strategies.add(strategyName);
-        this.setState( state => ( {...state, strategies} ),  this.generatePassword );
+        this.setState( state => ( {...state, strategies} ),  () => {
+            this.generatePassword();
+        } );
     }
 
     /**
@@ -70,7 +78,23 @@ export class PasswordGeneratorPage extends React.Component {
         const { strategies } = this.state;
         if ( strategies.size === 1 ) return;
         strategies.delete(strategyName);
-        this.setState( state => ( {...state} ), this.generatePassword );
+        this.setState( state => ( {...state} ), () => {
+            this.generatePassword();
+        } );
+    }
+
+    /**
+     *  toggleStrategy
+     *  Управляем добавлением или удалением стратегий
+     */
+
+    toggleStrategy = (strategyName) => {
+        const {strategies} = this.state;
+        if (strategies.has(strategyName)) {
+            this.removeStrategy(strategyName);
+        } else{
+            this.addStrategy(strategyName); 
+        }
     }
 
     /**
@@ -85,8 +109,10 @@ export class PasswordGeneratorPage extends React.Component {
     }
 
     render(){
+       
         const {suggestedPassword, length, strategies} = this.state;
-        return   <PasswordGenerator 
+        //console.log(suggestedPassword); //undefined
+        return   <PasswordGeneratorVuew 
         suggestedPassword={ suggestedPassword }
         strategyList={ ALL_STRATEGIES }
         length={ length }

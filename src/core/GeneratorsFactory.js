@@ -2,18 +2,19 @@ import { LetterGen, NumberGen, SymbolGen } from './generators';
 import { PasswordGenerator } from './PasswordGenerator';
 
 
+
 const STRATEGIES_TO_GENERATORS_MAP = {
     'NUMBER' : NumberGen,
     'LETTER' : LetterGen,
     'SYMBOL' : SymbolGen,
 }
 
-export class GeneratorFactory {
-
+export class GeneratorsFactory {
+    strategyInstance = new Map (); // MAP  c инстансами классов BaseGen
     constructor(length, strategyNames){
-        this.strategyNames = strategyNames; // string
+        this.strategyNames = strategyNames; // SET <string>
         this.length = length;
-        this.strategyInstance = new Map (); // MAP  c инстансами классов BaseGen
+
         this.initStrategies(); // Заполним this.strategyInstance
     }
 
@@ -32,18 +33,24 @@ export class GeneratorFactory {
     }
 
     // Получаем новый интстанс PasswordGenerator. Передаем длинну и массив инстансов BaseGen
-    setGenerator = () => {
-        this.generator = new PasswordGenerator( this.length, [...this.strategyInstance.values() ] );
+    setGenerator(){
+        this.generator = new PasswordGenerator( this.length, [ ...this.strategyInstance.values() ] );
     }
 
     initStrategies = () => {
         for ( let strategyName of this.strategyNames ) {
             this.strategyInstance.set( strategyName, new STRATEGIES_TO_GENERATORS_MAP[strategyName]() );
+            //this.setStrategy(strategyName, STRATEGIES_TO_GENERATORS_MAP[strategyName]);
         }
+        this.setGenerator();
     }
 
-    generate = () => {
+    generate(){
+        //console.log( this.generator ) ;
         return this.generator.generate();
+        //console.log(this.generator);
+        //return 'ok'
+
     }
 
     // при изменении длинны так же создаем новый инстанс Password Generator
