@@ -1,15 +1,15 @@
 import React from 'react';
-import { GeneratorsFactory } from '../core/GeneratorsFactory';
+import { GeneratorsFactory, PasswordGenerator } from '../core/GeneratorsFactory';
 
 
-const ALL_STRATEIES = [ 'NUMBER', 'LETTER', 'SYMBOL' ];
+const ALL_STRATEGIES = [ 'NUMBER', 'LETTER', 'SYMBOL' ];
 
 export class PasswordGeneratorPage extends React.Component {
 
     state = {
         suggestedPassword: '',
         length: 5,
-        strategies: new Set( ALL_STRATEIES ),
+        strategies: new Set( ALL_STRATEGIES ),
     }
 
     componentDidMount() {
@@ -64,13 +64,11 @@ export class PasswordGeneratorPage extends React.Component {
      *  Если в состоянии 1 стратегия, то ничего не делаем
      *  Если в состоянии более 1 стратегии то удаляем стратегию из Set и обновляем стейт. 
      *  Создаем новый экземпляр и генерируем новый пароль
-     * 
      */
-
 
     removeStrategy = (strategyName) => {
         const { strategies } = this.state;
-        if( strategies.size === 1 ) return;
+        if ( strategies.size === 1 ) return;
         strategies.delete(strategyName);
         this.setState( state => ( {...state} ), this.generatePassword );
     }
@@ -86,6 +84,16 @@ export class PasswordGeneratorPage extends React.Component {
         this.setPassword();
     }
 
-
+    render(){
+        const {suggestedPassword, length, strategies} = this.state;
+        return   <PasswordGenerator 
+        suggestedPassword={ suggestedPassword }
+        strategyList={ ALL_STRATEGIES }
+        length={ length }
+        onLengthChange={ this.setLength }
+        onStrategyChange={ this.toggleStrategy }
+        acriveStrategies={ [...strategies] }
+        />
+    }
 
 }
