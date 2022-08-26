@@ -1,4 +1,5 @@
 import React from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Container, Slider, Typography, FormControlLabel, Checkbox, Box, Button } from '@material-ui/core';
 
 
@@ -42,6 +43,11 @@ export const PasswordGeneratorVuew = ( {
                                                     }
                                                                             />)
                                     }
+                            </Box>
+                            <Box display="flex" justifyContent="flex-start">
+                                <CopyToClipboard text={suggestedPassword}>
+                                    <Button variant="contained" color="primary">Copy to clipboard</Button>
+                                </CopyToClipboard>
                             </Box>
                         </Container>
 
