@@ -1,13 +1,14 @@
-import { LetterGen, NumberGen, SymbolGen } from './generators';
+import { LetterGen, LetterGenUpperCased, NumberGen, SymbolGen } from './generators';
 import { PasswordGenerator } from './PasswordGenerator';
 
 
-export const ALL_STRATEGIES = [ 'NUMBER', 'LETTER', 'SYMBOL' ];
+export const ALL_STRATEGIES = [ 'NUMBER', 'LETTER', 'SYMBOL', 'LETTER_UPPER' ];
 
 const STRATEGIES_TO_GENERATORS_MAP = {
     'NUMBER' : NumberGen,
     'LETTER' : LetterGen,
     'SYMBOL' : SymbolGen,
+    'LETTER_UPPER' : LetterGenUpperCased,
 }
 
 export class GeneratorsFactory {

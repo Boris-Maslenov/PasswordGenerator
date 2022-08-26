@@ -13,6 +13,7 @@ export class PasswordGeneratorLogic extends React.Component {
 
     componentDidMount() {
         this.generatePassword();
+        console.log(this.state.strategies);
     }
 
     /**

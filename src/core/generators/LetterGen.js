@@ -7,7 +7,7 @@ export class LetterGen extends BaseGen{
         this.chars = 'abcdefghijklmnopqrstuvwxyz';
     }
 
-    generate = () => {
+    generate(){
         const index = Math.floor(Math.random() * this.chars.length);
         const symbol = this.chars[index];
         return symbol;

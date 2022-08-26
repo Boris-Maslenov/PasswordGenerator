@@ -1,9 +1,10 @@
 import { LetterGen } from "./LetterGen";
 
-export class LettersGenUpperCased extends LetterGen {
+export class LetterGenUpperCased extends LetterGen {
 
-    generate() {
-        return super.generate().toUpperCase();
+    generate = () => {
+        const symbolToUpperCased = super.generate().toUpperCase();
+        return symbolToUpperCased;
     }
-    
+
 }

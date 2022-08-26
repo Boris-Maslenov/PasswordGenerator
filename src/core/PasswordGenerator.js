@@ -12,7 +12,6 @@ export class PasswordGenerator extends BaseGen {
         super();
         this.length = length;
         this.strategies = strategies;
-        console.log(this.length);
     }
 
     /**
