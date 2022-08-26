@@ -1,7 +1,9 @@
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import {SetBGColor} from '../services/SetBGColor';
 import { Container, Slider, Typography, FormControlLabel, Checkbox, Box, Button } from '@material-ui/core';
 
+const setColor = new SetBGColor();
 
 export const PasswordGeneratorVuew = ( {
             onStrategyChange, 
@@ -11,6 +13,8 @@ export const PasswordGeneratorVuew = ( {
             onLengthChange, 
             minLength = 3, 
             maxLength = 15 } ) => {
+
+            setColor.init(length);
 
                 return <Container maxWidth="md">
                             <Typography variant="h2"  component="h1">
