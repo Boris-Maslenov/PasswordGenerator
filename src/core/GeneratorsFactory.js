@@ -2,6 +2,7 @@ import { LetterGen, NumberGen, SymbolGen } from './generators';
 import { PasswordGenerator } from './PasswordGenerator';
 
 
+export const ALL_STRATEGIES = [ 'NUMBER', 'LETTER', 'SYMBOL' ];
 
 const STRATEGIES_TO_GENERATORS_MAP = {
     'NUMBER' : NumberGen,
@@ -10,53 +11,73 @@ const STRATEGIES_TO_GENERATORS_MAP = {
 }
 
 export class GeneratorsFactory {
-    strategyInstance = new Map (); // MAP  c инстансами классов BaseGen
-    constructor(length, strategyNames){
-        this.strategyNames = strategyNames; // SET <string>
-        this.length = length;
 
+    constructor(length, strategyNames){
+        this.length = length;
+        this.strategyNames = strategyNames; // SET <string>
+        this.strategyInstance = new Map (); // MAP  c инстансами классов BaseGen
         this.initStrategies(); // Заполним this.strategyInstance
     }
 
-    // создаем инстанс и записываем в мапу. Так же создадим новый ген
-    setStrategy = (name, Constructor) => {
-        this.strategyInstance.set( name, new Constructor() );
-        this.setGenerator();
-        return this;
-    }
+    /**
+     * setStrategy
+     * 
+     * @param {string} name 
+     * @param {class<BaseGen>} Constructor 
+     */
 
-        // создаем инстанс и записываем в мапу. Так же создадим новый ген
-    removeStrategy(key) {
+    /**
+     * removeStrategy
+     * 
+     * @param {string} key 
+     */
+
+    removeStrategy = (key) => {
         this.strategyInstace.delete(key);
         this.setGenerator();
-        return this;
     }
 
-    // Получаем новый интстанс PasswordGenerator. Передаем длинну и массив инстансов BaseGen
-    setGenerator(){
+    /**
+     * setGenerator
+     * создает новый экземпляр PasswordGenerator с новой длинной или стратегиями
+     */
+
+    setGenerator = () => {
         this.generator = new PasswordGenerator( this.length, [ ...this.strategyInstance.values() ] );
     }
+
+    /**
+     * setLength
+     * Переопределяем новую длинну и создаем новый экземпляр генератора
+     */
+
+    setLength = (length) => {
+        this.length = length;
+        this.setGenerator();
+    }
+
+    
+    /**
+     * initStrategies
+     * Проходимся по массиву стратегий и заносим экземпляр класса в Set this.strategyInstance
+     * После этого создаем новый экземпляр генератора this.generator
+     */
 
     initStrategies = () => {
         for ( let strategyName of this.strategyNames ) {
             this.strategyInstance.set( strategyName, new STRATEGIES_TO_GENERATORS_MAP[strategyName]() );
-            //this.setStrategy(strategyName, STRATEGIES_TO_GENERATORS_MAP[strategyName]);
         }
         this.setGenerator();
     }
 
-    generate(){
-        //console.log( this.generator ) ;
+    /**
+     * generate
+     * Генерируем новый password
+     */
+
+    generate = () => {
         return this.generator.generate();
-        //console.log(this.generator);
-        //return 'ok'
-
     }
 
-    // при изменении длинны так же создаем новый инстанс Password Generator
-    setLength(length) {
-        this.length = length;
-        this.setGenerator();
-    }
 
 }

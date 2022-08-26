@@ -1,9 +1,7 @@
 import React from 'react';
-import { GeneratorsFactory } from '../core/GeneratorsFactory';
+import { GeneratorsFactory, ALL_STRATEGIES } from '../core/GeneratorsFactory';
 import { PasswordGeneratorVuew } from './PasswordGeneratorVuew';
 
-
-const ALL_STRATEGIES = [ 'NUMBER', 'LETTER', 'SYMBOL' ];
 
 export class PasswordGeneratorLogic extends React.Component {
 
@@ -25,7 +23,6 @@ export class PasswordGeneratorLogic extends React.Component {
     initGenerator = () => {
         const { length, strategies } = this.state;
         this.generator = new GeneratorsFactory(length, strategies);
-        //console.log(this.generator); // ok
     }
 
     /**
@@ -35,8 +32,6 @@ export class PasswordGeneratorLogic extends React.Component {
 
     setPassword () {
         const suggestedPassword =  this.generator.generate();
-        // console.dir(this.generator);
-        // console.log(suggestedPassword);
         this.setState( state => ( { ...state, suggestedPassword } ) );
     }
 
@@ -59,7 +54,7 @@ export class PasswordGeneratorLogic extends React.Component {
      */
 
     addStrategy = (strategyName) => {
-        const strategies = new Set(this.state.strategies);
+        const strategies = this.state.strategies;
         strategies.add(strategyName);
         this.setState( state => ( {...state, strategies} ),  () => {
             this.generatePassword();
@@ -111,7 +106,6 @@ export class PasswordGeneratorLogic extends React.Component {
     render(){
        
         const {suggestedPassword, length, strategies} = this.state;
-        //console.log(suggestedPassword); //undefined
         return   <PasswordGeneratorVuew 
         suggestedPassword={ suggestedPassword }
         strategyList={ ALL_STRATEGIES }
