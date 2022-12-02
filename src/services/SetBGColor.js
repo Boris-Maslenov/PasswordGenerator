@@ -12,10 +12,10 @@ export class SetBGColor {
         this.body.style.transition = 'all 0.5s';
         switch(number){
             case 3 :
-                this.setColor('#FF3427')
+                this.setColor('#FF3427');
                 break;
             case 4 :
-                this.setColor('#FF663D')
+                this.setColor('#FF663D'); 
             break;
             case 5 :
                 this.setColor('#FF9641');
