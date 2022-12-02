@@ -8,4 +8,4 @@ Material-ui,
 Rect Copy To Clibpoard.
 
 ### Ссылка на проект
-<a href="https://passwordg-generator.herokuapp.com/">passwordg-generator.herokuapp.com</a>
+<a href="https://boris-maslenov.github.io/PasswordGenerator/">passwordg-generator.herokuapp.com</a>
