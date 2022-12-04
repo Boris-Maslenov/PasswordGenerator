@@ -1,5 +1,6 @@
 import React from 'react';
 import { PasswordGeneratorLogic } from './components/PasswordGeneratorLogic';
+import './App.css';
 
 function App() {
   return (
